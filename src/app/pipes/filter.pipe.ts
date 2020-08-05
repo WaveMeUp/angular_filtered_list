@@ -9,7 +9,7 @@ import {Lecture} from '../interfaces/lecture';
 export class FilterPipe implements PipeTransform {
 
   transform(items: Lecture[], filters: Filters): Lecture[] {
-    if (!items) { return []; }
+    if (!items || items.length === 0) { return []; }
     if (!filters) { return items; }
     const searchText = filters.searchString.toLowerCase();
     let result;
@@ -21,7 +21,7 @@ export class FilterPipe implements PipeTransform {
     Object.keys(filters.levels).forEach(level => {
       if (filters.levels[level]) {
         result = result.filter(it => {
-          return it.level.toLowerCase().indexOf(level.toLowerCase()) > -1;
+          return it.level.toLowerCase().includes(level.toLowerCase());
         });
       }
     });
@@ -29,7 +29,7 @@ export class FilterPipe implements PipeTransform {
     Object.keys(filters.languages).forEach(lang => {
       if (filters.languages[lang]) {
         result = result.filter(it => {
-          return it.language.toLowerCase().indexOf(lang.toLowerCase()) > -1;
+          return it.language.toLowerCase().includes(lang.toLowerCase());
         });
       }
     });
