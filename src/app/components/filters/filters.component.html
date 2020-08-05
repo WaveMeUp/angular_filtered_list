@@ -1,0 +1,20 @@
+<div class="filters">
+  <div class="languages">
+    <label *ngFor="let item of languages">
+      <input type="checkbox" [value]="item" (change)="updateFilter()" [(ngModel)]="filters.languages[item]"> {{item}}
+    </label>
+  </div>
+  <div class="levels">
+    <label *ngFor="let item of levels">
+      <input type="checkbox" [value]="item" [(ngModel)]="filters.levels[item]" (change)="updateFilter()"> {{item}}
+    </label>
+  </div>
+</div>
+<div class="search">
+  <label>
+    <input type="text" placeholder="Type something..." [(ngModel)]="filters.searchString" (ngModelChange)="updateFilter()"/>
+  </label>
+</div>
+<div>
+  <button (click)="reset()">Reset</button>
+</div>
