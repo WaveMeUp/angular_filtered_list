@@ -33,8 +33,8 @@ export class AppComponent implements OnInit {
        * This way we can work with any amount languages and levels items.
        */
       this.lectures.forEach(l => {
-        if (this.languages.indexOf(l.language.toLowerCase()) === -1) { this.languages.push(l.language.toLowerCase()); }
-        if (this.levels.indexOf(l.level.toLowerCase()) === -1) { this.levels.push(l.level.toLowerCase()); }
+        if (!this.languages.includes(l.language.toLowerCase())) { this.languages.push(l.language.toLowerCase()); }
+        if (!this.levels.includes(l.level.toLowerCase())) { this.levels.push(l.level.toLowerCase()); }
       });
 
       // a little bit of костыли for OnPush
