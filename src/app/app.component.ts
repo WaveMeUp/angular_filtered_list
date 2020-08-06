@@ -27,23 +27,30 @@ export class AppComponent implements OnInit {
 
   getLectures(): void {
     this.lectureService.getLectures().subscribe(lectures => {
-      this.lectures = lectures;
+      if (lectures.length > 0) {
+        this.lectures = lectures;
+        try {
+          /**
+           * Collect available languages and levels for filtering.
+           * This way we can work with any amount languages and levels items.
+           */
+          this.lectures.forEach(l => {
+            const lan: string = l.language.toLowerCase();
+            const level: string = l.level.toLowerCase();
+            if (!this.languages.includes(lan as Locale)) { this.languages.push(lan as Locale); }
+            if (!this.levels.includes(level as Level)) { this.levels.push(level as Level); }
+          });
 
-      /**
-       * Collect available languages and levels for filtering.
-       * This way we can work with any amount languages and levels items.
-       */
-      this.lectures.forEach(l => {
-        const lan: string = l.language.toLowerCase();
-        const level: string = l.level.toLowerCase();
-        if (!this.languages.includes(lan as Locale)) { this.languages.push(lan as Locale); }
-        if (!this.levels.includes(level as Level)) { this.levels.push(level as Level); }
-      });
-
-      // a little bit of костыли for OnPush
-      this.languages = this.languages.slice();
-      this.levels = this.levels.slice();
-      this.cdr.detectChanges();
+          // a little bit of костыли for OnPush
+          this.languages = this.languages.slice();
+          this.levels = this.levels.slice();
+        } catch (e) {
+          console.error(`Something went wrong during lectures parsing: ${e}`);
+        }
+        this.cdr.detectChanges();
+      } else {
+        console.warn('Empty lectures array');
+      }
     });
   }
 

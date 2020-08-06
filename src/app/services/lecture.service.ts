@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 
 import {Lecture} from '../interfaces/lecture';
 import {LECTURES} from '../mocks/mock-lectures';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class LectureService {
   getLectures(): Observable<Lecture[]> {
     // return new Observable<Lecture[]>(subscriber => subscriber.next(LECTURES));
     // simple JSON response, bot mock works too
-    return this.http.get<Lecture[]>('https://functions.yandexcloud.net/d4ev82r8mr2lbnjja7ge');
+    return this.http.get<Lecture[]>('https://functions.yandexcloud.net/d4ev82r8mr2lbnjja7e').pipe(
+      catchError(err => {
+        console.error(err);
+        return new Observable<Lecture[]>(subscriber => subscriber.next([]));
+      })
+    );
   }
 }
