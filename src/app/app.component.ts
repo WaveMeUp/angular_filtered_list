@@ -33,11 +33,11 @@ export class AppComponent implements OnInit {
        * Collect available languages and levels for filtering.
        * This way we can work with any amount languages and levels items.
        */
-      this.lectures.forEach(l => {
-        const lan: string = l.language.toLowerCase();
-        const level: string = l.level.toLowerCase();
+      this.lectures.forEach(({language, level}) => {
+        const lan: string = language.toLowerCase();
+        const lev: string = level.toLowerCase();
         if (!this.languages.includes(lan as Locale)) { this.languages.push(lan as Locale); }
-        if (!this.levels.includes(level as Level)) { this.levels.push(level as Level); }
+        if (!this.levels.includes(lev as Level)) { this.levels.push(lev as Level); }
       });
 
       // a little bit of костыли for OnPush

@@ -13,9 +13,9 @@ export class FilterPipe implements PipeTransform {
     if (!filters) { return items; }
     const searchText = filters.searchString.toLowerCase();
     let result;
-    result = items.filter( it => {
+    result = items.filter( ({title, author}) => {
       // only title and author because for language and level we use checkboxes
-      return it.title.toLowerCase().includes(searchText) || it.author.toLowerCase().includes(searchText);
+      return title.toLowerCase().includes(searchText) || author.toLowerCase().includes(searchText);
     });
 
     Object.keys(filters.levels).forEach(level => {
