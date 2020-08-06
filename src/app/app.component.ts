@@ -3,6 +3,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {LectureService} from './services/lecture.service';
 import {Lecture} from './interfaces/lecture';
 import {Filters} from './interfaces/filters';
+import {Level, Locale} from './interfaces/types';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,8 @@ import {Filters} from './interfaces/filters';
 export class AppComponent implements OnInit {
   title = 'Let\'s Filter It!';
   lectures: Lecture[] = [];
-  languages: string[] = [];
-  levels: string[] = [];
+  languages: Locale[] = [];
+  levels: Level[] = [];
   filters: Filters;
 
   constructor(private lectureService: LectureService, private cdr: ChangeDetectorRef) {
@@ -33,8 +34,10 @@ export class AppComponent implements OnInit {
        * This way we can work with any amount languages and levels items.
        */
       this.lectures.forEach(l => {
-        if (!this.languages.includes(l.language.toLowerCase())) { this.languages.push(l.language.toLowerCase()); }
-        if (!this.levels.includes(l.level.toLowerCase())) { this.levels.push(l.level.toLowerCase()); }
+        const lan: string = l.language.toLowerCase();
+        const level: string = l.level.toLowerCase();
+        if (!this.languages.includes(lan as Locale)) { this.languages.push(lan as Locale); }
+        if (!this.levels.includes(level as Level)) { this.levels.push(level as Level); }
       });
 
       // a little bit of костыли for OnPush

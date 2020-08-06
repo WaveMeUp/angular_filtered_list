@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter, Output, Input, ChangeDetectionStrategy} from '@angular/core';
 
 import {Filters} from '../../interfaces/filters';
+import {Level, Locale} from '../../interfaces/types';
 
 @Component({
   selector: 'app-filters',
@@ -15,8 +16,8 @@ export class FiltersComponent implements OnInit {
    * I thought about uniting both 'languages' and 'levels' into one group
    * but this way actually would be less flexible
    */
-  @Input() languages: string[];
-  @Input() levels: string[];
+  @Input() languages: Locale[];
+  @Input() levels: Level[];
   filters: Filters;
 
   constructor() { }
@@ -35,8 +36,17 @@ export class FiltersComponent implements OnInit {
   reset(): void {
     this.filters = {
       searchString: '',
-      levels: {},
-      languages: {}
+      levels: {
+        hot: false,
+        intermediate: false,
+        hardcore: false,
+        academic: false,
+        advanced: false
+      },
+      languages: {
+        en: false,
+        ru: false
+      }
     };
     this.updateFilter();
   }

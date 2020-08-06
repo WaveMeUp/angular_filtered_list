@@ -1,5 +1,7 @@
+import {Level, Locale} from './types';
+
 export interface Filters {
   searchString: string;
-  levels: object;
-  languages: object;
+  levels: Record<Level, boolean>;
+  languages: Record<Locale, boolean>;
 }

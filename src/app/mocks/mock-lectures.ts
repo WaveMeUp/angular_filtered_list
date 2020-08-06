@@ -5,7 +5,7 @@ export const LECTURES: Lecture[] = [
     title: 'voluptate irure ea officia',
     author: 'Katrina Hopper',
     language: 'ru',
-    level: 'Intermediate'
+    level: 'intermediate'
   },
   {
     title: 'aliquip voluptate nisi reprehenderit',
@@ -29,7 +29,7 @@ export const LECTURES: Lecture[] = [
     title: 'irure sunt pariatur veniam',
     author: 'Allie York',
     language: 'ru',
-    level: 'Intermediate'
+    level: 'intermediate'
   },
   {
     title: 'quis officia officia id',
