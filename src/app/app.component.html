@@ -1,12 +1,15 @@
-<header>
-  <h1>{{title}}</h1>
-  <app-filters [lectures]="lectures | async"
-               (filterChange)="onFilterChange($event)">
-  </app-filters>
-</header>
+<ng-container *ngIf="lectures$ | async as lectures" >
+  <header>
+    <h1>{{title}}</h1>
+    <app-filters [lectures]="lectures"
+                 (filterChange)="onFilterChange($event)">
+    </app-filters>
+  </header>
 
-<main>
-  <app-lecture *ngFor="let lecture of lectures | async | filter: filters"
-               [lecture]="lecture">
-  </app-lecture>
-</main>
+  <main>
+    <app-lecture *ngFor="let lecture of lectures | filter: filters"
+                 [lecture]="lecture">
+    </app-lecture>
+  </main>
+</ng-container>
+

@@ -14,14 +14,14 @@ import {Observable} from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'Let\'s Filter It!';
-  lectures: Observable<Lecture[]>;
+  lectures$: Observable<Lecture[]>;
   filters: Filters;
 
   constructor(private lectureService: LectureService) {
   }
 
   ngOnInit(): void {
-    this.lectures = this.lectureService.getLectures();
+    this.lectures$ = this.lectureService.getLectures();
   }
 
   onFilterChange(changedData: Filters): void {
