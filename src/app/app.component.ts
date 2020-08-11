@@ -1,54 +1,30 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import {LectureService} from './services/lecture.service';
 import {Lecture} from './interfaces/lecture';
 import {Filters} from './interfaces/filters';
 import {Level, Locale} from './interfaces/types';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush // why not?
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   title = 'Let\'s Filter It!';
-  lectures: Lecture[] = [];
-  languages: Locale[] = [];
-  levels: Level[] = [];
+  lectures: Observable<Lecture[]>;
   filters: Filters;
 
-  constructor(private lectureService: LectureService, private cdr: ChangeDetectorRef) {
+  constructor(private lectureService: LectureService) {
   }
 
   ngOnInit(): void {
-    this.getLectures();
-  }
-
-  getLectures(): void {
-    this.lectureService.getLectures().subscribe(lectures => {
-      this.lectures = lectures;
-
-      /**
-       * Collect available languages and levels for filtering.
-       * This way we can work with any amount languages and levels items.
-       */
-      this.lectures.forEach(({language, level}) => {
-        const lan: string = language.toLowerCase();
-        const lev: string = level.toLowerCase();
-        if (!this.languages.includes(lan as Locale)) { this.languages.push(lan as Locale); }
-        if (!this.levels.includes(lev as Level)) { this.levels.push(lev as Level); }
-      });
-
-      // a little bit of костыли for OnPush
-      this.languages = this.languages.slice();
-      this.levels = this.levels.slice();
-      this.cdr.detectChanges();
-    });
+    this.lectures = this.lectureService.getLectures();
   }
 
   onFilterChange(changedData: Filters): void {
-    // because of OnPush change detection
     this.filters = {
       searchString: changedData.searchString,
       levels: changedData.levels,
