@@ -24,11 +24,11 @@ export class AppComponent implements OnInit {
     this.lectures$ = this.lectureService.getLectures();
   }
 
-  onFilterChange(changedData: Filters): void {
+  onFilterChange({searchString, levels, languages}: Filters): void {
     this.filters = {
-      searchString: changedData.searchString,
-      levels: changedData.levels,
-      languages: changedData.languages
+      searchString,
+      levels,
+      languages
     };
   }
 }
