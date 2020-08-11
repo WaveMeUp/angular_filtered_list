@@ -12,13 +12,6 @@ import {Lecture} from '../../interfaces/lecture';
 })
 export class FiltersComponent implements OnInit {
   @Output() filterChange = new EventEmitter<Filters>();
-
-  /**
-   * I thought about uniting both 'languages' and 'levels' into one group
-   * but this way actually would be less flexible
-   */
-  languages: Locale[] = [];
-  levels: Level[] = [];
   @Input() set lectures(lectures: Lecture[]) {
     if (lectures && lectures.length > 0) {
       /**
@@ -33,6 +26,12 @@ export class FiltersComponent implements OnInit {
       });
     }
   }
+  /**
+   * I thought about uniting both 'languages' and 'levels' into one group
+   * but this way actually would be less flexible
+   */
+  languages: Locale[] = [];
+  levels: Level[] = [];
   filters: Filters;
 
   constructor() { }
